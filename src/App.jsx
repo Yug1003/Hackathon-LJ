@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import DashboardView from './views/DashboardView';
 import AskProjectView from './views/AskProjectView';
@@ -17,37 +16,40 @@ export default function App() {
   const handleOpenIntelQuestion = (questionQuery) => {
     setSelectedIntelQuery(questionQuery);
     setCurrentTab('ask-project');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleNewSiteLogClick = () => {
     setCurrentTab('site-updates');
     setIsSiteLogModalOpen(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleAskIntelClick = () => {
     setCurrentTab('ask-project');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleTabChange = (tab) => {
+    setCurrentTab(tab);
+    if (tab !== 'ask-project') {
+      setSelectedIntelQuery('');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className="app-container">
-      {/* Left Navigation Sidebar */}
-      <Sidebar
+    <div className="website-root">
+      {/* Comprehensive Professional Top Navbar */}
+      <Header
         currentTab={currentTab}
-        setCurrentTab={(tab) => {
-          setCurrentTab(tab);
-          if (tab !== 'ask-project') {
-            setSelectedIntelQuery('');
-          }
-        }}
+        setCurrentTab={handleTabChange}
+        onNewSiteLogClick={handleNewSiteLogClick}
+        onAskIntelClick={handleAskIntelClick}
       />
 
-      {/* Main Command Center Layout */}
-      <main className="main-wrapper">
-        <Header
-          onNewSiteLogClick={handleNewSiteLogClick}
-          onAskIntelClick={handleAskIntelClick}
-        />
-
+      {/* Main Full-Width Content Container */}
+      <main className="website-main">
         {currentTab === 'dashboard' && (
           <DashboardView onOpenIntelQuestion={handleOpenIntelQuestion} />
         )}
@@ -79,6 +81,23 @@ export default function App() {
           <ReportsView />
         )}
       </main>
+
+      {/* Modern Professional Footer */}
+      <footer className="site-footer">
+        <div className="footer-inner">
+          <div className="footer-left">
+            <span className="footer-brand">CONSTRUCT<strong>IQ</strong></span>
+            <span className="footer-divider">|</span>
+            <span>Enterprise Construction & Engineering Intelligence</span>
+          </div>
+          <div className="footer-center">
+            <span>SUNRISE RESIDENCY · Ahmedabad Regional Development Authority Compliant</span>
+          </div>
+          <div className="footer-right">
+            <span className="footer-status-pill">IS 456 / IS 1893 Verified</span>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
