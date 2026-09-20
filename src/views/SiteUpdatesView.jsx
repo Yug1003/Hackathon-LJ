@@ -3,13 +3,11 @@ import { SITE_UPDATES } from '../data/projectData';
 import {
   Calendar,
   CloudSun,
-  HardHat,
-  Truck,
+  Users,
   ShieldCheck,
   Camera,
-  ChevronDown,
   Plus,
-  CheckCircle2
+  X
 } from 'lucide-react';
 
 export default function SiteUpdatesView({ isModalOpen, setIsModalOpen }) {
@@ -58,56 +56,58 @@ export default function SiteUpdatesView({ isModalOpen, setIsModalOpen }) {
   };
 
   return (
-    <div className="view-container">
-      <div className="section-header-wrap" style={{ marginBottom: '24px' }}>
-        <div>
-          <div className="hero-subtitle">Field Telemetry</div>
-          <h1 className="section-title" style={{ fontSize: '1.75rem' }}>Daily Site Updates & Inspection Logs</h1>
-          <p className="section-caption">
+    <div className="su-page-container">
+      {/* Page Header Block */}
+      <div className="su-header-row">
+        <div className="su-header-left">
+          <div className="su-eyebrow">Field Telemetry</div>
+          <h1 className="su-title">Daily Site Updates & Inspection Logs</h1>
+          <p className="su-description">
             Authenticated site logs recorded by licensed structural engineers and site supervisors.
           </p>
         </div>
         <button
-          className="header-action-btn primary"
+          className="su-record-btn"
           onClick={() => setIsModalOpen(true)}
+          type="button"
         >
-          <Plus size={14} strokeWidth={2.5} />
+          <Plus size={16} strokeWidth={2.5} />
           <span>Record Daily Site Log</span>
         </button>
       </div>
 
-      {/* Log Feed + Detail View */}
-      <div style={{ display: 'grid', gridTemplateColumns: '360px 1fr', gap: '24px' }}>
-        {/* Left: Log Directory */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      {/* Two-Column Layout Grid */}
+      <div className="su-layout-grid">
+        {/* Left Column: Sticky, independently scrollable list */}
+        <div className="su-left-column">
           {updates.map((log) => {
-            const isSelected = selectedUpdate.id === log.id;
+            const isSelected = selectedUpdate?.id === log.id;
             return (
               <div
                 key={log.id}
+                role="button"
+                tabIndex={0}
                 onClick={() => setSelectedUpdate(log)}
-                style={{
-                  backgroundColor: 'var(--color-card)',
-                  border: isSelected ? '1px solid var(--color-accent)' : '1px solid var(--color-border)',
-                  boxShadow: isSelected ? '0 0 0 1px var(--color-accent)' : 'var(--shadow-subtle)',
-                  borderRadius: 'var(--radius-sm)',
-                  padding: '16px 18px',
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease'
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setSelectedUpdate(log);
+                  }
                 }}
+                className={`su-list-card ${isSelected ? 'active' : ''}`}
               >
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                  <span className="mono-nums" style={{ fontSize: '0.72rem', fontWeight: 800, color: 'var(--color-accent)' }}>
+                <div className="su-card-top-row">
+                  <span className="su-card-id">
                     SITE UPDATE #{log.id}
                   </span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--color-text-secondary)' }}>
+                  <span className="su-card-date">
                     {log.date}
                   </span>
                 </div>
-                <div style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--color-primary)', lineHeight: 1.35, marginBottom: '6px' }}>
+                <div className="su-card-title">
                   {log.title}
                 </div>
-                <div style={{ fontSize: '0.74rem', color: 'var(--color-text-secondary)' }}>
+                <div className="su-card-meta">
                   {log.engineer} · {log.workforceTotal} Workers
                 </div>
               </div>
@@ -115,89 +115,140 @@ export default function SiteUpdatesView({ isModalOpen, setIsModalOpen }) {
           })}
         </div>
 
-        {/* Right: Detailed Inspection Dossier */}
+        {/* Right Detail Panel */}
         {selectedUpdate && (
-          <div className="intelligence-report-card" style={{ marginBottom: 0 }}>
-            <div className="report-banner">
-              <div className="report-doc-id">
-                <Calendar size={14} color="#77746D" />
-                <span>Site Update #{selectedUpdate.id}</span>
-                <span style={{ color: 'var(--color-border)' }}>|</span>
-                <span>{selectedUpdate.date} · {selectedUpdate.time}</span>
+          <div key={selectedUpdate.id} className="su-detail-card">
+            {/* Header */}
+            <div className="su-detail-header">
+              <div className="su-badge-pill">
+                <Calendar size={13} strokeWidth={2.2} />
+                <span>Site Update #{selectedUpdate.id} · {selectedUpdate.date} · {selectedUpdate.time}</span>
               </div>
-              <div className="report-stamp">
+              <div className="su-signoff">
                 Sign-off: {selectedUpdate.engineer}
               </div>
-            </div>
-
-            <div className="report-body">
-              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--color-primary)', marginBottom: '8px' }}>
+              <h2 className="su-detail-title">
                 {selectedUpdate.title}
               </h2>
 
-              <div style={{ display: 'flex', gap: '20px', fontSize: '0.78rem', color: 'var(--color-text-secondary)', marginBottom: '20px', paddingBottom: '16px', borderBottom: '1px solid var(--color-secondary)' }}>
-                <div><strong>Weather:</strong> {selectedUpdate.weather}</div>
-                <div><strong>Total Site Muster:</strong> {selectedUpdate.workforceTotal} personnel</div>
-                <div><strong>Safety Status:</strong> Zero Incidents</div>
-              </div>
-
-              {/* Work Summary */}
-              <div className="report-section">
-                <div className="report-label">Work Summary & Field Observations</div>
-                <div style={{ fontSize: '0.9rem', lineHeight: 1.6, color: 'var(--color-text)', backgroundColor: 'var(--color-bg)', padding: '16px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-border)' }}>
-                  {selectedUpdate.workSummary}
+              {/* Inline Chips */}
+              <div className="su-chips-row">
+                <div className="su-chip">
+                  <CloudSun size={15} strokeWidth={2} className="su-chip-icon" />
+                  <span><strong>Weather:</strong> {selectedUpdate.weather}</span>
+                </div>
+                <div className="su-chip">
+                  <Users size={15} strokeWidth={2} className="su-chip-icon" />
+                  <span><strong>Total Site Muster:</strong> {selectedUpdate.workforceTotal} personnel</span>
+                </div>
+                <div className={`su-chip ${!selectedUpdate.safetyIncidents || selectedUpdate.safetyIncidents.toLowerCase().includes('zero incidents') ? 'su-chip-safety-zero' : ''}`}>
+                  <ShieldCheck size={15} strokeWidth={2} className="su-chip-icon" />
+                  <span><strong>Safety Status:</strong> Zero Incidents</span>
                 </div>
               </div>
+            </div>
 
-              {/* Workforce Distribution */}
-              <div className="report-section">
-                <div className="report-label">Workforce Trade Distribution</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
-                  {Object.entries(selectedUpdate.workforceDistribution).map(([trade, count]) => (
-                    <div key={trade} style={{ backgroundColor: 'var(--color-bg)', padding: '10px 14px', borderRadius: 'var(--radius-sm)', border: '1px solid var(--color-border)' }}>
-                      <div style={{ fontSize: '0.68rem', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontWeight: 700 }}>
-                        {trade.replace(/([A-Z])/g, ' $1')}
+            <div className="su-divider"></div>
+
+            {/* Work Summary & Field Observations */}
+            <div className="su-section">
+              <div className="su-section-title">Work Summary & Field Observations</div>
+              <div className="su-work-summary-box">
+                {selectedUpdate.workSummary}
+              </div>
+            </div>
+
+            <div className="su-divider"></div>
+
+            {/* Workforce Trade Distribution */}
+            <div className="su-section">
+              <div className="su-section-title">Workforce Trade Distribution</div>
+              <div className="su-workforce-grid">
+                {Object.entries(selectedUpdate.workforceDistribution).map(([trade, count]) => {
+                  const total = selectedUpdate.workforceTotal || 248;
+                  const share = Math.min(100, Math.round((count / total) * 100));
+                  return (
+                    <div key={trade} className="su-workforce-card">
+                      <div>
+                        <div className="su-workforce-label">
+                          {trade.replace(/([A-Z])/g, ' $1')}
+                        </div>
+                        <div className="su-workforce-val-row">
+                          <span className="su-workforce-val">{count}</span>
+                          <span className="su-workforce-unit">Hands</span>
+                        </div>
                       </div>
-                      <div className="mono-nums" style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--color-primary)', marginTop: '2px' }}>
-                        {count} Hands
+                      <div className="su-progress-track" title={`${share}% of total workforce (${total})`}>
+                        <div className="su-progress-bar" style={{ width: `${share}%` }}></div>
                       </div>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
+            </div>
 
-              {/* Equipment Telemetry */}
-              <div className="report-section">
-                <div className="report-label">Heavy Plant & Equipment Telemetry</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px' }}>
-                  {selectedUpdate.equipmentStatus.map((eq, i) => (
-                    <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px 14px', border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)', backgroundColor: '#FAF9F6' }}>
-                      <span style={{ fontSize: '0.82rem', fontWeight: 600 }}>{eq.name}</span>
-                      <span className="critical-badge badge-monitoring mono-nums">{eq.uptime} Uptime</span>
+            <div className="su-divider"></div>
+
+            {/* Heavy Plant & Equipment Telemetry */}
+            <div className="su-section">
+              <div className="su-section-title">Heavy Plant & Equipment Telemetry</div>
+              <div className="su-equipment-grid">
+                {selectedUpdate.equipmentStatus.map((eq, i) => {
+                  const uptimeNum = parseInt(eq.uptime, 10) || 0;
+                  let badgeVariant = 'su-badge-amber';
+                  let dotVariant = 'su-dot-amber';
+                  if (uptimeNum >= 98) {
+                    badgeVariant = 'su-badge-green';
+                    dotVariant = 'su-dot-green';
+                  } else if (uptimeNum < 90) {
+                    badgeVariant = 'su-badge-red';
+                    dotVariant = 'su-dot-red';
+                  }
+
+                  return (
+                    <div key={i} className="su-equipment-card">
+                      <div className="su-equipment-left">
+                        <span className={`su-status-dot ${dotVariant}`}></span>
+                        <span className="su-equipment-name">{eq.name}</span>
+                      </div>
+                      <span className={`su-uptime-badge ${badgeVariant}`}>
+                        {eq.uptime} Uptime
+                      </span>
                     </div>
-                  ))}
-                </div>
+                  );
+                })}
               </div>
+            </div>
 
-              {/* Site Photos Inspection Notes */}
-              <div className="report-section">
-                <div className="report-label">Photographic Engineering Verification</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px' }}>
-                  {selectedUpdate.photos.map((p, idx) => (
-                    <div key={idx} style={{ border: '1px solid var(--color-border)', borderRadius: 'var(--radius-sm)', padding: '12px', backgroundColor: 'var(--color-bg)' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.72rem', color: 'var(--color-accent)', fontWeight: 700, marginBottom: '4px' }}>
-                        <Camera size={13} />
+            <div className="su-divider"></div>
+
+            {/* Photographic Engineering Verification */}
+            <div className="su-section">
+              <div className="su-section-title">Photographic Engineering Verification</div>
+              <div className="su-photo-grid">
+                {selectedUpdate.photos.map((p, idx) => (
+                  <div key={idx} className="su-photo-card">
+                    <div className="su-photo-banner">
+                      <div className="su-photo-blueprint-overlay"></div>
+                      <div className="su-photo-cam-badge">
+                        <Camera size={18} strokeWidth={2} />
+                      </div>
+                      <span className="su-photo-tag-pill">SITE VERIFIED</span>
+                    </div>
+                    <div className="su-photo-content">
+                      <div className="su-photo-loc">
+                        <Camera size={13} strokeWidth={2.2} />
                         <span>{p.location}</span>
                       </div>
-                      <div style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--color-primary)', marginBottom: '4px' }}>
+                      <div className="su-photo-title">
                         {p.title}
                       </div>
-                      <div style={{ fontSize: '0.74rem', color: 'var(--color-text-secondary)', lineHeight: 1.4 }}>
+                      <div className="su-photo-notes">
                         {p.notes}
                       </div>
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -206,42 +257,24 @@ export default function SiteUpdatesView({ isModalOpen, setIsModalOpen }) {
 
       {/* Modal for New Site Log */}
       {isModalOpen && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: 'rgba(32, 32, 32, 0.45)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 100,
-          backdropFilter: 'blur(2px)'
-        }}>
-          <div style={{
-            backgroundColor: 'var(--color-card)',
-            border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-sm)',
-            width: '560px',
-            maxWidth: '90vw',
-            boxShadow: '0 8px 30px rgba(0,0,0,0.12)',
-            overflow: 'hidden'
-          }}>
-            <div className="report-banner">
-              <span style={{ fontSize: '0.85rem', fontWeight: 800, color: 'var(--color-primary)' }}>
+        <div className="su-modal-overlay">
+          <div className="su-modal-container">
+            <div className="su-modal-header">
+              <span className="su-modal-title">
                 New Field Daily Site Log
               </span>
               <button
+                type="button"
                 onClick={() => setIsModalOpen(false)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', color: 'var(--color-text-secondary)' }}
+                className="su-modal-close-btn"
+                aria-label="Close modal"
               >
-                ✕
+                <X size={18} />
               </button>
             </div>
-            <form onSubmit={handleCreateLog} style={{ padding: '24px' }}>
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
+            <form onSubmit={handleCreateLog} className="su-modal-form">
+              <div className="su-form-group">
+                <label className="su-form-label">
                   Log Title / Milestone
                 </label>
                 <input
@@ -250,38 +283,24 @@ export default function SiteUpdatesView({ isModalOpen, setIsModalOpen }) {
                   placeholder="e.g. Tower A 13th Floor Slab Concreting & Cube Cast"
                   value={newLogTitle}
                   onChange={(e) => setNewLogTitle(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.88rem'
-                  }}
+                  className="su-form-input"
                 />
               </div>
 
-              <div style={{ marginBottom: '16px' }}>
-                <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
+              <div className="su-form-group">
+                <label className="su-form-label">
                   Supervising Engineer
                 </label>
                 <input
                   type="text"
                   value={newLogEngineer}
                   onChange={(e) => setNewLogEngineer(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.88rem'
-                  }}
+                  className="su-form-input"
                 />
               </div>
 
-              <div style={{ marginBottom: '20px' }}>
-                <label style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '6px' }}>
+              <div className="su-form-group">
+                <label className="su-form-label">
                   Observations & Progress Notes
                 </label>
                 <textarea
@@ -290,29 +309,21 @@ export default function SiteUpdatesView({ isModalOpen, setIsModalOpen }) {
                   placeholder="Record slump values, reinforcement checks, weather variations or trade delays..."
                   value={newLogSummary}
                   onChange={(e) => setNewLogSummary(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '8px 12px',
-                    border: '1px solid var(--color-border)',
-                    borderRadius: 'var(--radius-sm)',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: '0.88rem',
-                    resize: 'vertical'
-                  }}
+                  className="su-form-textarea"
                 />
               </div>
 
-              <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+              <div className="su-modal-actions">
                 <button
                   type="button"
-                  className="header-action-btn"
+                  className="su-btn-cancel"
                   onClick={() => setIsModalOpen(false)}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="header-action-btn primary"
+                  className="su-btn-submit"
                 >
                   Commit Log to Project Ledger
                 </button>
