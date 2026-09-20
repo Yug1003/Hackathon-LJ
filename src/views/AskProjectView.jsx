@@ -117,50 +117,50 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
   });
 
   return (
-    <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8">
-      <div className="max-w-6xl mx-auto px-6 space-y-6">
+    <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8 md:py-10">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 space-y-6 md:space-y-8">
 
         {/* Page Header */}
         <div className="pb-6 border-b border-gray-200">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 mb-2">
-            <Compass size={13} strokeWidth={2.4} />
+          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs md:text-sm font-medium bg-amber-50 text-amber-700 border border-amber-200 mb-3">
+            <Compass size={15} strokeWidth={2.2} />
             <span>PROJECT INTELLIGENCE</span>
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
             Ask about your project data.
           </h1>
-          <p className="text-sm text-gray-500 mt-1 max-w-2xl font-normal leading-relaxed">
+          <p className="text-base text-gray-500 mt-2 max-w-2xl font-normal leading-relaxed">
             Query schedules, material inventories, contractor milestones, and root cause engineering assessments.
           </p>
         </div>
 
         {/* Query Input Bar */}
-        <form onSubmit={handleSearchSubmit} className="bg-white border border-gray-200 rounded-xl p-2.5 shadow-sm flex items-center gap-3 focus-within:ring-2 focus-within:ring-gray-900 focus-within:border-transparent transition-all">
-          <Search size={18} className="text-gray-400 ml-2" />
+        <form onSubmit={handleSearchSubmit} className="bg-white border border-gray-200 rounded-xl p-3 shadow-sm flex items-center gap-3 focus-within:ring-2 focus-within:ring-gray-900 focus-within:border-transparent transition-all">
+          <Search size={20} className="text-gray-400 ml-2" />
           <input
             type="text"
-            className="flex-1 text-sm bg-transparent outline-none text-gray-900 placeholder:text-gray-400"
+            className="flex-1 text-base bg-transparent outline-none text-gray-900 placeholder:text-gray-400"
             placeholder="Search or ask an engineering question (e.g. Why is Tower A delayed?)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-gray-900 text-white text-xs font-semibold hover:bg-gray-800 shadow-sm transition-colors cursor-pointer"
+            className="px-5 py-2.5 rounded-lg bg-gray-900 text-white text-sm font-semibold hover:bg-gray-800 shadow-sm transition-colors cursor-pointer"
           >
             Query Data
           </button>
         </form>
 
         {/* Filter Pills */}
-        <div className="flex items-center flex-wrap gap-2">
-          <span className="text-xs font-medium uppercase tracking-wide text-gray-400 mr-1">Filter:</span>
+        <div className="flex items-center flex-wrap gap-2.5">
+          <span className="text-xs md:text-sm font-semibold uppercase tracking-wider text-gray-500 mr-1">Filter:</span>
           {filters.map((filter) => (
             <button
               key={filter}
               type="button"
               onClick={() => setSelectedFilter(filter)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer ${
                 selectedFilter === filter
                   ? 'bg-gray-900 text-white shadow-sm'
                   : 'bg-white text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-gray-200'
@@ -173,10 +173,10 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
 
         {/* Suggested Question Cards */}
         <section>
-          <h2 className="text-xs font-medium uppercase tracking-wide text-gray-400 mb-3">
+          <span className="text-sm font-semibold uppercase tracking-wide text-gray-500 block mb-3">
             Suggested Project Queries
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredQuestions.map((q) => {
               const isSelected = activeReportKey === q.question;
 
@@ -184,26 +184,26 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
                 <div
                   key={q.id}
                   onClick={() => handleSelectQuestion(q.question)}
-                  className={`bg-white rounded-xl border p-4 shadow-sm transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                  className={`bg-white rounded-xl border p-5 md:p-6 shadow-sm transition-all duration-200 cursor-pointer flex flex-col justify-between ${
                     isSelected
                       ? 'border-gray-900 ring-1 ring-gray-900 shadow-md'
                       : 'border-gray-200 hover:border-gray-300 hover:shadow-md hover:-translate-y-0.5'
                   }`}
                 >
                   <div>
-                    <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-wider block mb-1.5">
                       {q.category}
                     </span>
-                    <h3 className="text-sm font-bold text-gray-900 leading-snug mb-1.5">
+                    <h3 className="text-base font-bold text-gray-900 leading-snug mb-2">
                       {q.question}
                     </h3>
-                    <p className="text-xs text-gray-500 leading-relaxed">
+                    <p className="text-sm text-gray-500 leading-relaxed">
                       {q.preview}
                     </p>
                   </div>
-                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold text-gray-700">
+                  <div className="pt-4 mt-4 border-t border-gray-100 flex items-center justify-between text-sm font-semibold text-gray-700">
                     <span>Inspect Memo</span>
-                    <ArrowRight size={13} className="text-gray-400" />
+                    <ArrowRight size={16} className="text-gray-400" />
                   </div>
                 </div>
               );
@@ -215,49 +215,49 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
         {currentReport && (
           <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
             {/* Banner */}
-            <div className="bg-gray-50 border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2 text-xs font-mono text-gray-500">
-                <FileText size={14} className="text-gray-400" />
+            <div className="bg-gray-50 border-b border-gray-200 px-6 md:px-8 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-sm font-mono text-gray-500">
+                <FileText size={16} className="text-gray-400" />
                 <span className="font-bold text-gray-800">{currentReport.reportNumber}</span>
                 <span>|</span>
                 <span>{currentReport.dateGenerated}</span>
               </div>
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200 self-start sm:self-auto">
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-green-50 text-green-700 border border-green-200 self-start sm:self-auto">
                 Impact Analysis Verified
               </span>
             </div>
 
             {/* Body */}
-            <div className="p-6 sm:p-8 space-y-6">
+            <div className="p-6 md:p-8 space-y-6 md:space-y-8">
               {/* Question */}
               <div>
                 <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-1">
                   Question
                 </span>
-                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl md:text-3xl font-bold text-gray-900 leading-snug">
                   {currentReport.question}
                 </h2>
               </div>
 
               {/* Root Cause */}
               <div>
-                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-1.5">
+                <span className="text-sm font-semibold uppercase tracking-wide text-gray-500 block mb-2">
                   Root Cause
                 </span>
-                <div className="bg-amber-50/70 border-l-4 border-amber-600 rounded-r-lg p-4 text-sm text-gray-900 leading-relaxed">
+                <div className="bg-amber-50/70 border-l-4 border-amber-600 rounded-r-xl p-5 text-base leading-relaxed text-gray-800">
                   {currentReport.rootCause}
                 </div>
               </div>
 
               {/* Impacted Activities */}
               <div>
-                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-2">
+                <span className="text-sm font-semibold uppercase tracking-wide text-gray-500 block mb-3">
                   Impacted Activities
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {currentReport.impactedActivities.map((act, index) => (
-                    <div key={index} className="flex items-center gap-2 p-3 rounded-lg bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-900">
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0"></span>
+                    <div key={index} className="flex items-center gap-3 p-4 rounded-xl bg-gray-50 border border-gray-200 text-sm md:text-base font-semibold text-gray-900">
+                      <span className="w-2 h-2 rounded-full bg-amber-600 shrink-0"></span>
                       <span>{act}</span>
                     </div>
                   ))}
@@ -265,27 +265,27 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
               </div>
 
               {/* Schedule & Cost Impact Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 md:p-6">
                   <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block">
                     Schedule Impact
                   </span>
-                  <div className="text-2xl font-bold font-mono text-red-700 mt-1">
+                  <div className="text-2xl md:text-3xl font-bold font-mono text-red-700 mt-1">
                     {currentReport.scheduleImpact}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 mt-2">
                     {currentReport.scheduleDetails}
                   </p>
                 </div>
 
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-5 md:p-6">
                   <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block">
                     Estimated Cost Impact
                   </span>
-                  <div className="text-2xl font-bold font-mono text-gray-900 mt-1">
+                  <div className="text-2xl md:text-3xl font-bold font-mono text-gray-900 mt-1">
                     {currentReport.estimatedCostImpact}
                   </div>
-                  <p className="text-xs text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 mt-2">
                     {currentReport.costBreakdown}
                   </p>
                 </div>
@@ -293,18 +293,18 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
 
               {/* Recommended Action */}
               <div>
-                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-2">
+                <span className="text-sm font-semibold uppercase tracking-wide text-gray-500 block mb-2">
                   Recommended Action
                 </span>
-                <div className="bg-gray-50 rounded-xl border border-gray-200 p-5 space-y-3">
-                  <div className="text-sm font-bold text-gray-900">
+                <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 space-y-4">
+                  <div className="text-base md:text-lg font-bold text-gray-900">
                     {currentReport.recommendedAction}
                   </div>
                   {currentReport.actionSteps && currentReport.actionSteps.length > 0 && (
-                    <div className="space-y-1.5 pt-2 border-t border-gray-200">
+                    <div className="space-y-2.5 pt-3 border-t border-gray-200">
                       {currentReport.actionSteps.map((step, idx) => (
-                        <div key={idx} className="flex items-start gap-2 text-xs text-gray-700 leading-normal">
-                          <span className="font-mono font-bold text-amber-700 text-[11px] bg-amber-50 border border-amber-200 px-1.5 rounded">
+                        <div key={idx} className="flex items-start gap-3 text-sm md:text-base text-gray-700 leading-relaxed">
+                          <span className="font-mono font-bold text-amber-700 text-xs bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">
                             0{idx + 1}
                           </span>
                           <span>{step}</span>
@@ -317,12 +317,12 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
 
               {/* Sources */}
               <div>
-                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-2">
+                <span className="text-sm font-semibold uppercase tracking-wide text-gray-500 block mb-2">
                   Sources
                 </span>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2.5">
                   {currentReport.sources.map((src, idx) => (
-                    <div key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-700">
+                    <div key={idx} className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-sm text-gray-700">
                       <span className="font-semibold text-gray-900">{src.name}</span>
                       <span className="text-gray-400">({src.type})</span>
                     </div>
@@ -332,23 +332,23 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
             </div>
 
             {/* Footer Actions */}
-            <div className="bg-gray-50 border-t border-gray-200 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+            <div className="bg-gray-50 border-t border-gray-200 px-6 md:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-gray-500">
               <span>Verified against Primavera Baseline & Daily Site Log ledger.</span>
-              <div className="flex items-center gap-2 w-full sm:w-auto">
+              <div className="flex items-center gap-3 w-full sm:w-auto">
                 <button
                   type="button"
                   onClick={handleCopyReport}
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-gray-200 text-gray-700 font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-gray-200 text-gray-700 font-semibold hover:bg-gray-100 transition-colors cursor-pointer text-sm"
                 >
-                  {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
+                  {copied ? <Check size={16} className="text-green-600" /> : <Copy size={16} />}
                   <span>{copied ? 'Copied' : 'Copy Memo'}</span>
                 </button>
                 <button
                   type="button"
                   onClick={handlePrint}
-                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors cursor-pointer shadow-sm"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors cursor-pointer shadow-sm text-sm"
                 >
-                  <Printer size={14} />
+                  <Printer size={16} />
                   <span>Print Memo</span>
                 </button>
               </div>
