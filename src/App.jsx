@@ -39,7 +39,7 @@ export default function App() {
   };
 
   return (
-    <div className="website-root">
+    <div className="website-root min-h-screen flex flex-col bg-[#F7F6F2]">
       {/* Comprehensive Professional Top Navbar */}
       <Header
         currentTab={currentTab}
@@ -48,8 +48,8 @@ export default function App() {
         onAskIntelClick={handleAskIntelClick}
       />
 
-      {/* Main Full-Width Content Container */}
-      <main className="website-main">
+      {/* Main Content Area */}
+      <main className="website-main flex-1 w-full">
         {currentTab === 'dashboard' && (
           <DashboardView onOpenIntelQuestion={handleOpenIntelQuestion} />
         )}
@@ -82,19 +82,28 @@ export default function App() {
         )}
       </main>
 
-      {/* Modern Professional Footer */}
-      <footer className="site-footer">
-        <div className="footer-inner">
-          <div className="footer-left">
-            <span className="footer-brand">CONSTRUCT<strong>IQ</strong></span>
-            <span className="footer-divider">|</span>
-            <span>Enterprise Construction & Engineering Intelligence</span>
+      {/* Modern Professional Footer with Tailwind Flexbox Spacing */}
+      <footer className="w-full bg-white border-t border-[#E5E3DD] py-6 px-4 sm:px-6 lg:px-8 mt-auto">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#77746D]">
+          {/* Left: Branding & Tagline */}
+          <div className="flex items-center gap-3">
+            <span className="font-extrabold text-[#202020] text-sm tracking-tight">
+              CONSTRUCT<span className="text-[#77746D] font-normal">IQ</span>
+            </span>
+            <span className="text-[#E5E3DD]">|</span>
+            <span className="font-medium">Enterprise Construction & Engineering Intelligence</span>
           </div>
-          <div className="footer-center">
+
+          {/* Center: Compliance / Authority */}
+          <div className="text-center font-normal">
             <span>SUNRISE RESIDENCY · Ahmedabad Regional Development Authority Compliant</span>
           </div>
-          <div className="footer-right">
-            <span className="footer-status-pill">IS 456 / IS 1893 Verified</span>
+
+          {/* Right: Verification Status Badge */}
+          <div className="flex items-center">
+            <span className="inline-flex items-center px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider bg-[#F2F4ED] text-[#6F7658] border border-[#CAD1BE] hover:bg-[#6F7658] hover:text-white transition-colors duration-200">
+              IS 456 / IS 1893 Verified
+            </span>
           </div>
         </div>
       </footer>
