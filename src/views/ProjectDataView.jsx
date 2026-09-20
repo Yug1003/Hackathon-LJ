@@ -20,8 +20,8 @@ export default function ProjectDataView() {
 
   return (
     <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8 md:py-12">
-      {/* Centered Main Content Column taking up ~80% on desktop */}
-      <div className="w-full lg:w-[80%] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
+      {/* Centered Main Content Column taking up ~90% on desktop */}
+      <div className="w-full lg:w-[90%] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
         
         {/* Page Header & Visual Hierarchy */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-gray-200">

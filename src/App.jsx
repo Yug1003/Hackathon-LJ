@@ -84,7 +84,7 @@ export default function App() {
 
       {/* Modern Professional Footer with Tailwind Flexbox Spacing */}
       <footer className="w-full bg-white border-t border-gray-200 py-6 px-4 sm:px-6 lg:px-8 mt-auto">
-        <div className="w-full lg:w-[80%] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-base text-gray-500">
+        <div className="w-full lg:w-[90%] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-base text-gray-500">
           {/* Left: Branding & Tagline */}
           <div className="flex items-center gap-3">
             <span className="font-extrabold text-gray-900 text-lg tracking-tight">

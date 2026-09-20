@@ -14,8 +14,8 @@ import {
 export default function RisksView() {
   return (
     <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8 md:py-12">
-      {/* Centered Main Container taking up ~80% on desktop */}
-      <div className="w-full lg:w-[80%] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
+      {/* Centered Main Container taking up ~90% on desktop */}
+      <div className="w-full lg:w-[90%] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
 
         {/* Page Header & Visual Hierarchy */}
         <div className="pb-6 border-b border-gray-200">

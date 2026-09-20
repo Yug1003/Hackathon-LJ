@@ -20,7 +20,7 @@ import {
 export default function DashboardView({ onOpenIntelQuestion }) {
   return (
     <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8 md:py-12">
-      <div className="w-full lg:w-[80%] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
+      <div className="w-full lg:w-[90%] mx-auto px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-10">
 
         {/* Hero Section */}
         <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 md:p-8">
