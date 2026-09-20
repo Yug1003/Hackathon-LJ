@@ -7,312 +7,346 @@ import {
 import {
   ArrowRight,
   TrendingDown,
-  TrendingUp,
   Clock,
   HardHat,
   Truck,
   CheckCircle2,
   AlertCircle,
-  FileCheck2,
+  Activity,
   Layers,
-  MapPin,
-  Calendar,
-  ShieldCheck,
-  PackageCheck
+  Building2
 } from 'lucide-react';
 
 export default function DashboardView({ onOpenIntelQuestion }) {
   return (
-    <div className="view-container spacious-layout">
-      {/* Hero Section - Bold Architectural Presence with Generous Air */}
-      <section className="dashboard-hero-spacious">
-        <div className="hero-kicker-wrap">
-          <span className="hero-kicker-tag">PROJECT OVERVIEW</span>
-          <span className="hero-kicker-sep">/</span>
-          <span className="hero-kicker-meta">Command Center Telemetry</span>
-        </div>
-        <h1 className="hero-title-large">
-          Good morning. Here's what needs your attention.
-        </h1>
-        <p className="hero-lead-text">
-          Active superstructure civil execution at Sunrise Residency. 3 critical operational bottlenecks flagged across Procurement, Inventory, and MEP coordination.
-        </p>
+    <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8">
+      <div className="max-w-7xl mx-auto px-6 space-y-6">
 
-        {/* Spacious Project Meta Ribbon */}
-        <div className="project-editorial-ribbon">
-          <div className="ribbon-item">
-            <span className="ribbon-label">Location & Structure</span>
-            <span className="ribbon-val">{PROJECT_INFO.name} · {PROJECT_INFO.details}</span>
+        {/* Hero Section */}
+        <section className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-gray-200">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 mb-2">
+                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                <span>PROJECT OVERVIEW</span>
+              </div>
+              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
+                Good morning. Here's what needs your attention.
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">
+                Active superstructure execution at {PROJECT_INFO.name} ({PROJECT_INFO.details}). 3 key impediments require field mitigation.
+              </p>
+            </div>
+
+            {/* Quick Meta Stats Pill Box */}
+            <div className="flex items-center gap-3">
+              <div className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block">Health Index</span>
+                <span className="text-base font-bold text-green-700 font-mono">{PROJECT_INFO.healthScore}% Verified</span>
+              </div>
+              <div className="px-4 py-2 rounded-lg bg-gray-50 border border-gray-200">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block">Countdown</span>
+                <span className="text-base font-bold text-gray-900 font-mono">{PROJECT_INFO.daysToHandover} Days</span>
+              </div>
+            </div>
           </div>
-          <div className="ribbon-item">
-            <span className="ribbon-label">Current Execution Phase</span>
-            <span className="ribbon-val">
-              <span className="status-indicator-dot" style={{ display: 'inline-block', marginRight: '6px' }}></span>
-              {PROJECT_INFO.phase}
+
+          {/* Ribbon Summary */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-6 pt-2">
+            <div>
+              <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Phase</span>
+              <p className="text-sm font-semibold text-gray-900 mt-0.5">{PROJECT_INFO.phase}</p>
+            </div>
+            <div>
+              <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Target Completion</span>
+              <p className="text-sm font-semibold text-gray-900 mt-0.5">{PROJECT_INFO.targetCompletion}</p>
+            </div>
+            <div>
+              <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Workforce On Site</span>
+              <p className="text-sm font-semibold text-gray-900 mt-0.5 font-mono">{PROJECT_INFO.workforceOnSite} Personnel</p>
+            </div>
+            <div>
+              <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Weather Telemetry</span>
+              <p className="text-sm font-semibold text-gray-900 mt-0.5">{PROJECT_INFO.weather.temp} · {PROJECT_INFO.weather.condition}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 1: 3 Critical Attention Items */}
+        <section>
+          <div className="border-b border-gray-200 pb-2 mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Critical Attention Items
+            </h2>
+            <span className="text-xs font-medium text-red-700 bg-red-50 border border-red-200 px-2.5 py-0.5 rounded-full">
+              3 Active Issues
             </span>
           </div>
-          <div className="ribbon-item">
-            <span className="ribbon-label">Handover Timeline</span>
-            <span className="ribbon-val mono-nums">{PROJECT_INFO.daysToHandover} Days to Handover ({PROJECT_INFO.targetCompletion})</span>
-          </div>
-          <div className="ribbon-item">
-            <span className="ribbon-label">Active Field Deployment</span>
-            <span className="ribbon-val mono-nums">{PROJECT_INFO.workforceOnSite} Personnel Certified On-Site</span>
-          </div>
-        </div>
-      </section>
 
-      {/* SECTION 1: The 3 Critical Project Issues - Roomy & High Contrast */}
-      <section className="dashboard-major-section">
-        <div className="section-headline-bar">
-          <div>
-            <div className="section-kicker">Priority 1 / Immediate Resolution</div>
-            <h2 className="section-title-large">Critical Attention Items</h2>
-            <p className="section-subtitle">
-              Prioritized impediments impacting schedule baseline, material inventory, and consultant sign-offs.
-            </p>
-          </div>
-          <div className="section-action-meta">
-            <span className="critical-counter-pill">3 Active Impediments</span>
-          </div>
-        </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {CRITICAL_ISSUES.map((issue) => {
+              const isHigh = issue.priorityLevel === 'critical';
+              const isMedium = issue.priorityLevel === 'warning';
 
-        <div className="critical-issues-grid-spacious">
-          {CRITICAL_ISSUES.map((issue) => {
-            const badgeClass =
-              issue.priorityLevel === 'critical'
-                ? 'badge-critical'
-                : issue.priorityLevel === 'warning'
-                ? 'badge-warning'
-                : 'badge-monitoring';
-
-            return (
-              <div key={issue.id} className="critical-card-spacious">
-                <div className="card-top-row">
-                  <span className="card-mono-index">{issue.id}</span>
-                  <span className={`critical-badge ${badgeClass}`}>
-                    {issue.priority}
-                  </span>
-                </div>
-
-                <div className="card-title-group">
-                  <h3 className="card-major-title">{issue.title}</h3>
-                  <div className="card-sub-location">{issue.location}</div>
-                </div>
-
-                <div className="card-impact-panel">
-                  <div className="impact-line">
-                    <span className="impact-line-label">Impact Analysis:</span>
-                    <span className="impact-line-value">{issue.impact}</span>
-                  </div>
-                  <div className="impact-line">
-                    <span className="impact-line-label">Cost Exposure:</span>
-                    <span className="impact-line-value mono-nums">{issue.costRisk}</span>
-                  </div>
-                </div>
-
-                <div className="card-recommendation-block">
-                  <div className="rec-header-label">Recommended Action</div>
-                  <p className="rec-body-text">{issue.recommendation}</p>
-                </div>
-
-                <div className="card-footer-action">
-                  <button
-                    className="intel-inspect-button"
-                    onClick={() => onOpenIntelQuestion(issue.questionQuery)}
-                  >
-                    <span>Inspect in Project Intelligence</span>
-                    <ArrowRight size={14} className="action-arrow" />
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* SECTION 2: Key Site Telemetry & Engineering Indicators */}
-      <section className="dashboard-major-section">
-        <div className="section-headline-bar">
-          <div>
-            <div className="section-kicker">Operational Metrics</div>
-            <h2 className="section-title-large">Site Telemetry & Performance Variance</h2>
-            <p className="section-subtitle">
-              Measured against certified Primavera baseline schedules and chartered quantity survey certificates.
-            </p>
-          </div>
-          <span className="section-meta-text">
-            {PROJECT_INFO.lastUpdate}
-          </span>
-        </div>
-
-        <div className="metrics-grid-spacious">
-          <div className="metric-tile-spacious">
-            <div className="metric-tile-header">
-              <span className="metric-tile-label">Active Workforce</span>
-              <HardHat size={18} color="#77746D" />
-            </div>
-            <div className="metric-tile-number mono-nums">{PROJECT_INFO.workforceOnSite}</div>
-            <div className="metric-tile-sub positive">
-              <span>98% target mobilization</span> · 6 trades active
-            </div>
-          </div>
-
-          <div className="metric-tile-spacious">
-            <div className="metric-tile-header">
-              <span className="metric-tile-label">Critical Path Schedule Variance</span>
-              <Clock size={18} color="#B65345" />
-            </div>
-            <div className="metric-tile-number mono-nums" style={{ color: 'var(--color-status-critical)' }}>
-              +4 Days
-            </div>
-            <div className="metric-tile-sub critical">
-              Tower A rebar transit delay (Hazira freight)
-            </div>
-          </div>
-
-          <div className="metric-tile-spacious">
-            <div className="metric-tile-header">
-              <span className="metric-tile-label">Capital Expenditure vs Budget</span>
-              <TrendingDown size={18} color="#557A62" />
-            </div>
-            <div className="metric-tile-number mono-nums">₹41.2 Cr</div>
-            <div className="metric-tile-sub positive">
-              -1.4% Net Favorable Variance (Allocated: ₹68.4 Cr)
-            </div>
-          </div>
-
-          <div className="metric-tile-spacious">
-            <div className="metric-tile-header">
-              <span className="metric-tile-label">Meteorology / Pour Readiness</span>
-              <Truck size={18} color="#6F7658" />
-            </div>
-            <div className="metric-tile-number mono-nums">{PROJECT_INFO.weather.temp}</div>
-            <div className="metric-tile-sub positive">
-              {PROJECT_INFO.weather.condition} · Humidity {PROJECT_INFO.weather.humidity}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 3: Superstructure Elevation Matrix */}
-      <section className="dashboard-major-section">
-        <div className="section-headline-bar">
-          <div>
-            <div className="section-kicker">Structural Progress</div>
-            <h2 className="section-title-large">Superstructure Elevation Matrix</h2>
-            <p className="section-subtitle">
-              Slab cycles, shuttering strike intervals, and vertical progression across all 3 towers.
-            </p>
-          </div>
-        </div>
-
-        <div className="towers-grid-spacious">
-          {TOWER_STATUS.map((item) => (
-            <div key={item.tower} className="tower-card-spacious">
-              <div className="tower-header-row">
-                <div>
-                  <h3 className="tower-title-text">{item.tower}</h3>
-                  <div className="tower-floor-stage">{item.currentFloor}</div>
-                </div>
-                <span
-                  className={`critical-badge ${
-                    item.statusType === 'critical' ? 'badge-critical' : 'badge-monitoring'
-                  }`}
-                >
-                  {item.status}
-                </span>
-              </div>
-
-              {/* Progress Bar */}
-              <div className="tower-bar-track">
+              return (
                 <div
-                  className={`tower-bar-fill ${item.statusType === 'critical' ? 'accent' : ''}`}
-                  style={{ width: `${item.completionRate}%` }}
-                ></div>
-              </div>
+                  key={issue.id}
+                  className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="font-mono text-xs font-bold text-gray-400 bg-gray-50 border border-gray-200 px-2 py-0.5 rounded">
+                        #{issue.id}
+                      </span>
+                      <span
+                        className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          isHigh
+                            ? 'bg-red-50 text-red-700 border border-red-200'
+                            : isMedium
+                            ? 'bg-amber-50 text-amber-700 border border-amber-200'
+                            : 'bg-blue-50 text-blue-700 border border-blue-200'
+                        }`}
+                      >
+                        {issue.priority}
+                      </span>
+                    </div>
 
-              <div className="tower-stat-row-top">
-                <span className="stat-label-muted">Structural Completion</span>
-                <span className="mono-nums stat-bold-val">
-                  {item.completionRate}% ({item.currentFloor.split(' ')[0]} / {item.targetFloor} Floors)
-                </span>
-              </div>
+                    <h3 className="text-base font-bold text-gray-900 leading-snug">
+                      {issue.title}
+                    </h3>
+                    <div className="text-xs text-gray-500 font-medium mt-0.5 mb-3">
+                      {issue.location}
+                    </div>
 
-              <div className="tower-stats-panel">
-                <div className="tower-stat-item">
-                  <div className="stat-label-muted">Assigned Workforce</div>
-                  <div className="mono-nums stat-highlight-val">{item.workforce} Masons & Carpenters</div>
+                    <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 space-y-1.5 mb-3">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-gray-500">Impact:</span>
+                        <span className="font-semibold text-gray-900">{issue.impact}</span>
+                      </div>
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-gray-500">Cost Exposure:</span>
+                        <span className="font-mono font-semibold text-gray-900">{issue.costRisk}</span>
+                      </div>
+                    </div>
+
+                    <div className="text-xs text-gray-600 leading-relaxed mb-4">
+                      <span className="font-semibold text-gray-900 block mb-0.5">Recommended Action:</span>
+                      {issue.recommendation}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-gray-100">
+                    <button
+                      type="button"
+                      onClick={() => onOpenIntelQuestion(issue.questionQuery)}
+                      className="w-full flex items-center justify-center gap-1.5 text-xs font-semibold text-amber-700 hover:text-amber-800 bg-amber-50 hover:bg-amber-100/80 border border-amber-200 rounded-lg py-2 transition-colors cursor-pointer"
+                    >
+                      <span>View Project Intelligence Memo</span>
+                      <ArrowRight size={13} />
+                    </button>
+                  </div>
                 </div>
-                <div className="tower-stat-item">
-                  <div className="stat-label-muted">Critical Path Milestone</div>
-                  <div className="stat-highlight-val">{item.criticalPath}</div>
-                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Section 2: Key Operational Metrics */}
+        <section>
+          <div className="border-b border-gray-200 pb-2 mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Site Telemetry & Performance Variance
+            </h2>
+            <span className="text-xs text-gray-500 font-normal">
+              {PROJECT_INFO.lastUpdate}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Active Workforce</span>
+                <HardHat size={16} className="text-gray-400" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 font-mono">{PROJECT_INFO.workforceOnSite}</div>
+              <div className="text-xs text-green-700 font-medium mt-1 flex items-center gap-1">
+                <CheckCircle2 size={12} />
+                <span>98% Planned Mobilization</span>
               </div>
             </div>
-          ))}
-        </div>
-      </section>
 
-      {/* SECTION 4: Certified Engineering Quality Logs */}
-      <section className="dashboard-major-section" style={{ marginBottom: '40px' }}>
-        <div className="section-headline-bar">
-          <div>
-            <div className="section-kicker">Quality Assurance Dossier</div>
-            <h2 className="section-title-large">Certified Engineering Inspection Logs</h2>
-            <p className="section-subtitle">
-              Field observations, cube strength verifications, and compliance with IS 456 / IS 1893.
-            </p>
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Schedule Variance</span>
+                <Clock size={16} className="text-red-500" />
+              </div>
+              <div className="text-2xl font-bold text-red-700 font-mono">+4 Days</div>
+              <div className="text-xs text-red-600 font-medium mt-1">
+                Tower A Rebar bottleneck
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Committed Budget</span>
+                <TrendingDown size={16} className="text-green-600" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 font-mono">₹41.2 Cr</div>
+              <div className="text-xs text-green-700 font-medium mt-1">
+                -1.4% Under Monthly Cap
+              </div>
+            </div>
+
+            <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-4 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400">Pour Meteorology</span>
+                <Truck size={16} className="text-blue-500" />
+              </div>
+              <div className="text-2xl font-bold text-gray-900 font-mono">{PROJECT_INFO.weather.temp}</div>
+              <div className="text-xs text-green-700 font-medium mt-1">
+                {PROJECT_INFO.weather.condition} · Ideal for RMC
+              </div>
+            </div>
           </div>
-        </div>
+        </section>
 
-        <div className="spacious-table-wrapper">
-          <table className="data-table spacious-table">
-            <thead>
-              <tr>
-                <th>Log Code</th>
-                <th>Time & Date</th>
-                <th>Structural Milestone Inspected</th>
-                <th>Quality / Slump Testing</th>
-                <th>Supervising Engineer</th>
-                <th>Compliance Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="mono-nums" style={{ fontWeight: 800, color: 'var(--color-primary)' }}>
-                  LOG-2026-024
-                </td>
-                <td className="mono-nums">Today, 09:30 IST</td>
-                <td style={{ fontWeight: 600 }}>Tower B · Level 14 Columns Concreting (48 m³)</td>
-                <td>IS 456 Slump: 125mm · 6 Cubes Cast</td>
-                <td>Er. Rajesh Varma</td>
-                <td><span className="critical-badge badge-monitoring">IS Compliant</span></td>
-              </tr>
-              <tr>
-                <td className="mono-nums" style={{ fontWeight: 800, color: 'var(--color-primary)' }}>
-                  LOG-2026-023
-                </td>
-                <td className="mono-nums">19 Sept, 18:00 IST</td>
-                <td style={{ fontWeight: 600 }}>Tower C · Level 9 Soffit Formwork Striking</td>
-                <td>Laser Deflection & Honeycomb Scan</td>
-                <td>Er. Anita Desai</td>
-                <td><span className="critical-badge badge-monitoring">Zero Defects</span></td>
-              </tr>
-              <tr>
-                <td className="mono-nums" style={{ fontWeight: 800, color: 'var(--color-primary)' }}>
-                  LOG-2026-022
-                </td>
-                <td className="mono-nums">18 Sept, 16:15 IST</td>
-                <td style={{ fontWeight: 600 }}>Basement B2 · Exterior Waterproofing Tanking</td>
-                <td>Air Lance Hydrostatic Joint Pressure Test</td>
-                <td>Er. Rajesh Varma</td>
-                <td><span className="critical-badge badge-monitoring">Passed (2.5 bar)</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+        {/* Section 3: Superstructure Elevation Matrix */}
+        <section>
+          <div className="border-b border-gray-200 pb-2 mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Superstructure Elevation Matrix
+            </h2>
+            <span className="text-xs text-gray-500">
+              3 Towers · 18 Floors Target
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {TOWER_STATUS.map((item) => {
+              const isDelayed = item.statusType === 'critical';
+
+              return (
+                <div
+                  key={item.tower}
+                  className="bg-white border border-gray-200 rounded-xl shadow-sm p-5 hover:shadow-md hover:border-gray-300 hover:-translate-y-0.5 transition-all duration-200"
+                >
+                  <div className="flex items-start justify-between gap-2 mb-3">
+                    <div>
+                      <h3 className="text-base font-bold text-gray-900">{item.tower}</h3>
+                      <div className="text-xs text-gray-500 font-medium mt-0.5">{item.currentFloor}</div>
+                    </div>
+                    <span
+                      className={`px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                        isDelayed
+                          ? 'bg-red-50 text-red-700 border border-red-200'
+                          : 'bg-green-50 text-green-700 border border-green-200'
+                      }`}
+                    >
+                      {item.status}
+                    </span>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="w-full bg-gray-100 rounded-full h-2 my-3 overflow-hidden">
+                    <div
+                      className={`h-full rounded-full transition-all duration-500 ${
+                        isDelayed ? 'bg-amber-600' : 'bg-gray-900'
+                      }`}
+                      style={{ width: `${item.completionRate}%` }}
+                    ></div>
+                  </div>
+
+                  <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
+                    <span>Progress:</span>
+                    <span className="font-bold font-mono text-gray-900">
+                      {item.completionRate}% ({item.currentFloor.split(' ')[0]} / {item.targetFloor}F)
+                    </span>
+                  </div>
+
+                  <div className="bg-gray-50 rounded-lg p-3 border border-gray-100 grid grid-cols-2 gap-2 text-xs">
+                    <div>
+                      <span className="text-gray-400 uppercase text-[10px] font-medium block">Labor Force</span>
+                      <span className="font-semibold text-gray-900 font-mono">{item.workforce} Techs</span>
+                    </div>
+                    <div>
+                      <span className="text-gray-400 uppercase text-[10px] font-medium block">Critical Path</span>
+                      <span className="font-semibold text-gray-900 truncate block">{item.criticalPath}</span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Section 4: Certified Engineering Inspection Logs */}
+        <section>
+          <div className="border-b border-gray-200 pb-2 mb-4 flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-gray-900">
+              Certified Engineering Inspection Logs
+            </h2>
+            <span className="text-xs font-medium text-green-700 bg-green-50 border border-green-200 px-2.5 py-0.5 rounded-full">
+              IS 456 Compliant
+            </span>
+          </div>
+
+          <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse min-w-[750px]">
+                <thead>
+                  <tr className="bg-gray-50 border-b border-gray-200 text-xs font-semibold uppercase text-gray-500">
+                    <th className="py-3 px-4">Log Code</th>
+                    <th className="py-3 px-4">Time & Date</th>
+                    <th className="py-3 px-4">Structural Milestone Inspected</th>
+                    <th className="py-3 px-4">Testing Protocol</th>
+                    <th className="py-3 px-4">Supervising Engineer</th>
+                    <th className="py-3 px-4 text-center">Compliance</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 text-sm">
+                  <tr className="hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-4 font-mono font-bold text-xs text-gray-900">LOG-2026-024</td>
+                    <td className="py-3 px-4 text-xs font-mono text-gray-500">Today, 09:30 IST</td>
+                    <td className="py-3 px-4 font-semibold text-gray-900">Tower B · Level 14 Columns Pour (48 m³)</td>
+                    <td className="py-3 px-4 text-xs text-gray-600">IS 456 Slump: 125mm (Pass)</td>
+                    <td className="py-3 px-4 text-xs text-gray-900">Er. Rajesh Varma</td>
+                    <td className="py-3 px-4 text-center">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
+                        Compliant
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-4 font-mono font-bold text-xs text-gray-900">LOG-2026-023</td>
+                    <td className="py-3 px-4 text-xs font-mono text-gray-500">19 Sept, 18:00 IST</td>
+                    <td className="py-3 px-4 font-semibold text-gray-900">Tower C · Level 9 Soffit Formwork Striking</td>
+                    <td className="py-3 px-4 text-xs text-gray-600">Deflection & Laser Scan</td>
+                    <td className="py-3 px-4 text-xs text-gray-900">Er. Anita Desai</td>
+                    <td className="py-3 px-4 text-center">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
+                        Compliant
+                      </span>
+                    </td>
+                  </tr>
+                  <tr className="hover:bg-gray-50 transition-colors">
+                    <td className="py-3 px-4 font-mono font-bold text-xs text-gray-900">LOG-2026-022</td>
+                    <td className="py-3 px-4 text-xs font-mono text-gray-500">18 Sept, 16:15 IST</td>
+                    <td className="py-3 px-4 font-semibold text-gray-900">Basement B2 · Exterior Tanking Membrane</td>
+                    <td className="py-3 px-4 text-xs text-gray-600">Air Lance Pressure Test (2.5 bar)</td>
+                    <td className="py-3 px-4 text-xs text-gray-900">Er. Rajesh Varma</td>
+                    <td className="py-3 px-4 text-center">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200">
+                        Zero Leakage
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
     </div>
   );
 }

@@ -7,16 +7,11 @@ import {
   Search,
   FileText,
   Printer,
-  Share2,
-  CheckCircle,
-  ExternalLink,
-  ChevronRight,
-  ShieldAlert,
-  ArrowRight,
-  Sparkles,
-  Layers,
   Copy,
-  Check
+  Check,
+  Compass,
+  ArrowRight,
+  CheckCircle2
 } from 'lucide-react';
 
 export default function AskProjectView({ selectedQuestionQuery }) {
@@ -122,203 +117,245 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
   });
 
   return (
-    <div className="view-container spacious-layout">
-      <div className="ask-project-container-spacious">
-        {/* Header Area */}
-        <section className="intel-header-area-spacious">
-          <div className="hero-kicker-wrap">
-            <span className="hero-kicker-tag">PROJECT INTELLIGENCE</span>
-            <span className="hero-kicker-sep">/</span>
-            <span className="hero-kicker-meta">Engineering Decision Engine</span>
+    <div className="w-full bg-gray-50 min-h-[calc(100vh-72px)] py-8">
+      <div className="max-w-6xl mx-auto px-6 space-y-6">
+
+        {/* Page Header */}
+        <div className="pb-6 border-b border-gray-200">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200 mb-2">
+            <Compass size={13} strokeWidth={2.4} />
+            <span>PROJECT INTELLIGENCE</span>
           </div>
-          <h1 className="hero-title-large" style={{ marginBottom: '14px' }}>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 tracking-tight">
             Ask about your project data.
           </h1>
-          <p className="hero-lead-text" style={{ maxWidth: '820px' }}>
-            Query live field logs, supply chain dependencies, contractor commitments, and IS code compliance to generate structured engineering memos.
+          <p className="text-sm text-gray-500 mt-1 max-w-2xl font-normal leading-relaxed">
+            Query schedules, material inventories, contractor milestones, and root cause engineering assessments.
           </p>
-        </section>
+        </div>
 
-        {/* Large Architectural Query Input Bar */}
-        <form onSubmit={handleSearchSubmit} className="intel-search-box-spacious">
-          <Search size={20} color="#77746D" />
+        {/* Query Input Bar */}
+        <form onSubmit={handleSearchSubmit} className="bg-white border border-gray-200 rounded-xl p-2.5 shadow-sm flex items-center gap-3 focus-within:ring-2 focus-within:ring-gray-900 focus-within:border-transparent transition-all">
+          <Search size={18} className="text-gray-400 ml-2" />
           <input
             type="text"
-            className="intel-search-input-spacious"
-            placeholder="Ask a technical or schedule question (e.g. Why is Tower A delayed?)"
+            className="flex-1 text-sm bg-transparent outline-none text-gray-900 placeholder:text-gray-400"
+            placeholder="Search or ask an engineering question (e.g. Why is Tower A delayed?)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button type="submit" className="intel-submit-btn-spacious">
-            <span>Query Intelligence</span>
+          <button
+            type="submit"
+            className="px-4 py-2 rounded-lg bg-gray-900 text-white text-xs font-semibold hover:bg-gray-800 shadow-sm transition-colors cursor-pointer"
+          >
+            Query Data
           </button>
         </form>
 
-        {/* Filter Categories with generous spacing */}
-        <div className="intel-filters-row-spacious">
-          <span className="filter-label">Filter Domains:</span>
+        {/* Filter Pills */}
+        <div className="flex items-center flex-wrap gap-2">
+          <span className="text-xs font-medium uppercase tracking-wide text-gray-400 mr-1">Filter:</span>
           {filters.map((filter) => (
             <button
               key={filter}
-              className={`intel-filter-chip-spacious ${selectedFilter === filter ? 'active' : ''}`}
+              type="button"
               onClick={() => setSelectedFilter(filter)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer ${
+                selectedFilter === filter
+                  ? 'bg-gray-900 text-white shadow-sm'
+                  : 'bg-white text-gray-600 hover:text-gray-900 hover:bg-gray-100 border border-gray-200'
+              }`}
             >
               {filter}
             </button>
           ))}
         </div>
 
-        {/* Large Suggested Question Cards */}
-        <section style={{ marginBottom: '64px' }}>
-          <div className="section-kicker" style={{ marginBottom: '16px' }}>
-            Standard Project Enquiries
-          </div>
-          <div className="suggested-questions-grid-spacious">
+        {/* Suggested Question Cards */}
+        <section>
+          <h2 className="text-xs font-medium uppercase tracking-wide text-gray-400 mb-3">
+            Suggested Project Queries
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredQuestions.map((q) => {
               const isSelected = activeReportKey === q.question;
+
               return (
                 <div
                   key={q.id}
-                  className={`suggested-question-card-spacious ${isSelected ? 'active' : ''}`}
                   onClick={() => handleSelectQuestion(q.question)}
+                  className={`bg-white rounded-xl border p-4 shadow-sm transition-all duration-200 cursor-pointer flex flex-col justify-between ${
+                    isSelected
+                      ? 'border-gray-900 ring-1 ring-gray-900 shadow-md'
+                      : 'border-gray-200 hover:border-gray-300 hover:shadow-md hover:-translate-y-0.5'
+                  }`}
                 >
-                  <div className="question-cat-tag">{q.category}</div>
-                  <div className="question-title-text-spacious">{q.question}</div>
-                  <div className="question-preview-text">{q.preview}</div>
+                  <div>
+                    <span className="text-[11px] font-bold text-amber-700 uppercase tracking-wider block mb-1">
+                      {q.category}
+                    </span>
+                    <h3 className="text-sm font-bold text-gray-900 leading-snug mb-1.5">
+                      {q.question}
+                    </h3>
+                    <p className="text-xs text-gray-500 leading-relaxed">
+                      {q.preview}
+                    </p>
+                  </div>
+                  <div className="pt-3 mt-3 border-t border-gray-100 flex items-center justify-between text-xs font-semibold text-gray-700">
+                    <span>Inspect Memo</span>
+                    <ArrowRight size={13} className="text-gray-400" />
+                  </div>
                 </div>
               );
             })}
           </div>
         </section>
 
-        {/* THE STRUCTURED PROJECT REPORT - SPACIOUS & HIGH CONTRAST */}
+        {/* Structured Engineering Report Card */}
         {currentReport && (
-          <section className="intelligence-report-card-spacious">
-            {/* Report Banner */}
-            <div className="report-banner-spacious">
-              <div className="report-doc-id">
-                <FileText size={16} color="#77746D" />
-                <span className="mono-nums">{currentReport.reportNumber}</span>
-                <span style={{ color: 'var(--color-border)' }}>|</span>
+          <section className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+            {/* Banner */}
+            <div className="bg-gray-50 border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div className="flex items-center gap-2 text-xs font-mono text-gray-500">
+                <FileText size={14} className="text-gray-400" />
+                <span className="font-bold text-gray-800">{currentReport.reportNumber}</span>
+                <span>|</span>
                 <span>{currentReport.dateGenerated}</span>
               </div>
-              <div className="report-stamp">
-                Verified Engineering Memo
-              </div>
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-50 text-green-700 border border-green-200 self-start sm:self-auto">
+                Impact Analysis Verified
+              </span>
             </div>
 
-            {/* Report Body */}
-            <div className="report-body-spacious">
+            {/* Body */}
+            <div className="p-6 sm:p-8 space-y-6">
               {/* Question */}
-              <div className="report-section-spacious">
-                <div className="report-label">Target Question</div>
-                <h2 className="report-question-heading-spacious">{currentReport.question}</h2>
+              <div>
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-1">
+                  Question
+                </span>
+                <h2 className="text-xl sm:text-2xl font-bold text-gray-900">
+                  {currentReport.question}
+                </h2>
               </div>
 
               {/* Root Cause */}
-              <div className="report-section-spacious">
-                <div className="report-label">Root Cause Analysis</div>
-                <div className="report-root-cause-box-spacious">
+              <div>
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-1.5">
+                  Root Cause
+                </span>
+                <div className="bg-amber-50/70 border-l-4 border-amber-600 rounded-r-lg p-4 text-sm text-gray-900 leading-relaxed">
                   {currentReport.rootCause}
                 </div>
               </div>
 
               {/* Impacted Activities */}
-              <div className="report-section-spacious">
-                <div className="report-label">Impacted Downstream Activities</div>
-                <ul className="activities-list-spacious">
+              <div>
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-2">
+                  Impacted Activities
+                </span>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   {currentReport.impactedActivities.map((act, index) => (
-                    <li key={index} className="activity-item-spacious">
-                      <span className="activity-item-bullet"></span>
+                    <div key={index} className="flex items-center gap-2 p-3 rounded-lg bg-gray-50 border border-gray-200 text-xs font-semibold text-gray-900">
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-600 shrink-0"></span>
                       <span>{act}</span>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
               </div>
 
-              {/* 2-Column Metrics: Schedule Impact & Estimated Cost Impact */}
-              <div className="report-impact-grid-spacious">
-                <div className="impact-tile-spacious">
-                  <div className="report-label">Schedule Impact</div>
-                  <div className="impact-tile-val-spacious critical-val">
+              {/* Schedule & Cost Impact Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                  <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block">
+                    Schedule Impact
+                  </span>
+                  <div className="text-2xl font-bold font-mono text-red-700 mt-1">
                     {currentReport.scheduleImpact}
                   </div>
-                  <div className="impact-tile-detail-spacious">
+                  <p className="text-xs text-gray-500 mt-1">
                     {currentReport.scheduleDetails}
-                  </div>
+                  </p>
                 </div>
 
-                <div className="impact-tile-spacious">
-                  <div className="report-label">Estimated Cost Impact</div>
-                  <div className="impact-tile-val-spacious mono-nums">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+                  <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block">
+                    Estimated Cost Impact
+                  </span>
+                  <div className="text-2xl font-bold font-mono text-gray-900 mt-1">
                     {currentReport.estimatedCostImpact}
                   </div>
-                  <div className="impact-tile-detail-spacious">
+                  <p className="text-xs text-gray-500 mt-1">
                     {currentReport.costBreakdown}
-                  </div>
+                  </p>
                 </div>
               </div>
 
               {/* Recommended Action */}
-              <div className="report-section-spacious">
-                <div className="report-label">Recommended Action & Protocol</div>
-                <div className="recommended-action-box-spacious">
-                  <div className="action-main-text-spacious">
+              <div>
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-2">
+                  Recommended Action
+                </span>
+                <div className="bg-gray-50 rounded-xl border border-gray-200 p-5 space-y-3">
+                  <div className="text-sm font-bold text-gray-900">
                     {currentReport.recommendedAction}
                   </div>
                   {currentReport.actionSteps && currentReport.actionSteps.length > 0 && (
-                    <ul className="action-steps-list-spacious">
+                    <div className="space-y-1.5 pt-2 border-t border-gray-200">
                       {currentReport.actionSteps.map((step, idx) => (
-                        <li key={idx} className="action-step-item-spacious">
-                          <span className="action-step-number">0{idx + 1}</span>
+                        <div key={idx} className="flex items-start gap-2 text-xs text-gray-700 leading-normal">
+                          <span className="font-mono font-bold text-amber-700 text-[11px] bg-amber-50 border border-amber-200 px-1.5 rounded">
+                            0{idx + 1}
+                          </span>
                           <span>{step}</span>
-                        </li>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
                   )}
                 </div>
               </div>
 
               {/* Sources */}
-              <div className="report-section-spacious" style={{ marginBottom: 0 }}>
-                <div className="report-label">Traceable Information Sources</div>
-                <div className="sources-pills-wrap-spacious">
+              <div>
+                <span className="text-xs font-medium uppercase tracking-wide text-gray-400 block mb-2">
+                  Sources
+                </span>
+                <div className="flex flex-wrap gap-2">
                   {currentReport.sources.map((src, idx) => (
-                    <div key={idx} className="source-pill-spacious">
-                      <span>{src.name}</span>
-                      <span className="source-pill-type">({src.type})</span>
+                    <div key={idx} className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-50 border border-gray-200 text-xs text-gray-700">
+                      <span className="font-semibold text-gray-900">{src.name}</span>
+                      <span className="text-gray-400">({src.type})</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
 
-            {/* Report Footer & Actions */}
-            <div className="report-footer-spacious">
-              <div className="report-footer-left">
-                Verified against Primavera Baseline & Daily Site Log ledger.
-              </div>
-              <div className="report-footer-actions">
+            {/* Footer Actions */}
+            <div className="bg-gray-50 border-t border-gray-200 px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500">
+              <span>Verified against Primavera Baseline & Daily Site Log ledger.</span>
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <button
-                  className="header-action-btn"
+                  type="button"
                   onClick={handleCopyReport}
-                  title="Copy Report to Clipboard"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-white border border-gray-200 text-gray-700 font-semibold hover:bg-gray-100 transition-colors cursor-pointer"
                 >
-                  {copied ? <Check size={14} color="#557A62" /> : <Copy size={14} />}
+                  {copied ? <Check size={14} className="text-green-600" /> : <Copy size={14} />}
                   <span>{copied ? 'Copied' : 'Copy Memo'}</span>
                 </button>
                 <button
-                  className="header-action-btn primary"
+                  type="button"
                   onClick={handlePrint}
-                  title="Print Engineering Intelligence Dossier"
+                  className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors cursor-pointer shadow-sm"
                 >
                   <Printer size={14} />
-                  <span>Print Engineering Memo</span>
+                  <span>Print Memo</span>
                 </button>
               </div>
             </div>
           </section>
         )}
+
       </div>
     </div>
   );
