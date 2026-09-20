@@ -52,7 +52,6 @@ export default function AskProjectView({ selectedQuestionQuery }) {
     e.preventDefault();
     if (!searchQuery.trim()) return;
 
-    // Check if matching predefined report
     const match = Object.keys(INTELLIGENCE_REPORTS).find((q) =>
       q.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -60,7 +59,6 @@ export default function AskProjectView({ selectedQuestionQuery }) {
     if (match) {
       setActiveReportKey(match);
     } else {
-      // Dynamic fallback for custom query adhering to structured format
       setActiveReportKey(searchQuery);
     }
   };
@@ -85,7 +83,6 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Get active report or fallback generator
   const currentReport =
     INTELLIGENCE_REPORTS[activeReportKey] || {
       question: activeReportKey,
@@ -114,7 +111,6 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
       ]
     };
 
-  // Filter suggested questions
   const filteredQuestions = SUGGESTED_QUESTIONS.filter((item) => {
     if (selectedFilter === 'All') return true;
     if (selectedFilter === 'Schedule Impact' && item.category.includes('Schedule')) return true;
@@ -126,39 +122,45 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
   });
 
   return (
-    <div className="view-container">
-      <div className="ask-project-container">
-        {/* Header - EXACT USER REQUIREMENTS */}
-        <section className="intel-header-area">
-          <div className="intel-kicker">Project Intelligence</div>
-          <h1 className="intel-title">Ask about your project data.</h1>
-          <p className="intel-subtitle">
-            Query schedules, material inventories, contractor milestones, and root cause engineering assessments.
+    <div className="view-container spacious-layout">
+      <div className="ask-project-container-spacious">
+        {/* Header Area */}
+        <section className="intel-header-area-spacious">
+          <div className="hero-kicker-wrap">
+            <span className="hero-kicker-tag">PROJECT INTELLIGENCE</span>
+            <span className="hero-kicker-sep">/</span>
+            <span className="hero-kicker-meta">Engineering Decision Engine</span>
+          </div>
+          <h1 className="hero-title-large" style={{ marginBottom: '14px' }}>
+            Ask about your project data.
+          </h1>
+          <p className="hero-lead-text" style={{ maxWidth: '820px' }}>
+            Query live field logs, supply chain dependencies, contractor commitments, and IS code compliance to generate structured engineering memos.
           </p>
         </section>
 
-        {/* Query Input Box (Not a chat bubble!) */}
-        <form onSubmit={handleSearchSubmit} className="intel-search-box">
-          <Search size={18} color="#77746D" />
+        {/* Large Architectural Query Input Bar */}
+        <form onSubmit={handleSearchSubmit} className="intel-search-box-spacious">
+          <Search size={20} color="#77746D" />
           <input
             type="text"
-            className="intel-search-input"
-            placeholder="Search or ask an engineering question (e.g. Why is Tower A delayed?)"
+            className="intel-search-input-spacious"
+            placeholder="Ask a technical or schedule question (e.g. Why is Tower A delayed?)"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button type="submit" className="intel-submit-btn">
-            <span>Query Data</span>
+          <button type="submit" className="intel-submit-btn-spacious">
+            <span>Query Intelligence</span>
           </button>
         </form>
 
-        {/* Filter Categories */}
-        <div className="intel-filters-row">
-          <span className="filter-label">Filter:</span>
+        {/* Filter Categories with generous spacing */}
+        <div className="intel-filters-row-spacious">
+          <span className="filter-label">Filter Domains:</span>
           {filters.map((filter) => (
             <button
               key={filter}
-              className={`intel-filter-chip ${selectedFilter === filter ? 'active' : ''}`}
+              className={`intel-filter-chip-spacious ${selectedFilter === filter ? 'active' : ''}`}
               onClick={() => setSelectedFilter(filter)}
             >
               {filter}
@@ -166,22 +168,22 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
           ))}
         </div>
 
-        {/* Large Suggested Question Cards as Clean Rectangular Cards */}
-        <section style={{ marginBottom: '32px' }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em', color: 'var(--color-text-secondary)', marginBottom: '12px' }}>
-            Suggested Project Queries
+        {/* Large Suggested Question Cards */}
+        <section style={{ marginBottom: '64px' }}>
+          <div className="section-kicker" style={{ marginBottom: '16px' }}>
+            Standard Project Enquiries
           </div>
-          <div className="suggested-questions-grid">
+          <div className="suggested-questions-grid-spacious">
             {filteredQuestions.map((q) => {
               const isSelected = activeReportKey === q.question;
               return (
                 <div
                   key={q.id}
-                  className={`suggested-question-card ${isSelected ? 'active' : ''}`}
+                  className={`suggested-question-card-spacious ${isSelected ? 'active' : ''}`}
                   onClick={() => handleSelectQuestion(q.question)}
                 >
                   <div className="question-cat-tag">{q.category}</div>
-                  <div className="question-title-text">{q.question}</div>
+                  <div className="question-title-text-spacious">{q.question}</div>
                   <div className="question-preview-text">{q.preview}</div>
                 </div>
               );
@@ -189,44 +191,44 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
           </div>
         </section>
 
-        {/* THE STRUCTURED PROJECT REPORT - EXACT USER FORMAT */}
+        {/* THE STRUCTURED PROJECT REPORT - SPACIOUS & HIGH CONTRAST */}
         {currentReport && (
-          <section className="intelligence-report-card">
+          <section className="intelligence-report-card-spacious">
             {/* Report Banner */}
-            <div className="report-banner">
+            <div className="report-banner-spacious">
               <div className="report-doc-id">
-                <FileText size={15} color="#77746D" />
-                <span>{currentReport.reportNumber}</span>
+                <FileText size={16} color="#77746D" />
+                <span className="mono-nums">{currentReport.reportNumber}</span>
                 <span style={{ color: 'var(--color-border)' }}>|</span>
                 <span>{currentReport.dateGenerated}</span>
               </div>
               <div className="report-stamp">
-                Impact Analysis Verified
+                Verified Engineering Memo
               </div>
             </div>
 
             {/* Report Body */}
-            <div className="report-body">
+            <div className="report-body-spacious">
               {/* Question */}
-              <div className="report-section">
-                <div className="report-label">Question</div>
-                <h2 className="report-question-heading">{currentReport.question}</h2>
+              <div className="report-section-spacious">
+                <div className="report-label">Target Question</div>
+                <h2 className="report-question-heading-spacious">{currentReport.question}</h2>
               </div>
 
               {/* Root Cause */}
-              <div className="report-section">
-                <div className="report-label">Root Cause</div>
-                <div className="report-root-cause-box">
+              <div className="report-section-spacious">
+                <div className="report-label">Root Cause Analysis</div>
+                <div className="report-root-cause-box-spacious">
                   {currentReport.rootCause}
                 </div>
               </div>
 
               {/* Impacted Activities */}
-              <div className="report-section">
-                <div className="report-label">Impacted Activities</div>
-                <ul className="activities-list">
+              <div className="report-section-spacious">
+                <div className="report-label">Impacted Downstream Activities</div>
+                <ul className="activities-list-spacious">
                   {currentReport.impactedActivities.map((act, index) => (
-                    <li key={index} className="activity-item">
+                    <li key={index} className="activity-item-spacious">
                       <span className="activity-item-bullet"></span>
                       <span>{act}</span>
                     </li>
@@ -235,39 +237,39 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
               </div>
 
               {/* 2-Column Metrics: Schedule Impact & Estimated Cost Impact */}
-              <div className="report-impact-grid">
-                <div className="impact-tile">
+              <div className="report-impact-grid-spacious">
+                <div className="impact-tile-spacious">
                   <div className="report-label">Schedule Impact</div>
-                  <div className="impact-tile-val critical-val">
+                  <div className="impact-tile-val-spacious critical-val">
                     {currentReport.scheduleImpact}
                   </div>
-                  <div className="impact-tile-detail">
+                  <div className="impact-tile-detail-spacious">
                     {currentReport.scheduleDetails}
                   </div>
                 </div>
 
-                <div className="impact-tile">
+                <div className="impact-tile-spacious">
                   <div className="report-label">Estimated Cost Impact</div>
-                  <div className="impact-tile-val mono-nums">
+                  <div className="impact-tile-val-spacious mono-nums">
                     {currentReport.estimatedCostImpact}
                   </div>
-                  <div className="impact-tile-detail">
+                  <div className="impact-tile-detail-spacious">
                     {currentReport.costBreakdown}
                   </div>
                 </div>
               </div>
 
               {/* Recommended Action */}
-              <div className="report-section">
-                <div className="report-label">Recommended Action</div>
-                <div className="recommended-action-box">
-                  <div className="action-main-text">
+              <div className="report-section-spacious">
+                <div className="report-label">Recommended Action & Protocol</div>
+                <div className="recommended-action-box-spacious">
+                  <div className="action-main-text-spacious">
                     {currentReport.recommendedAction}
                   </div>
                   {currentReport.actionSteps && currentReport.actionSteps.length > 0 && (
-                    <ul className="action-steps-list">
+                    <ul className="action-steps-list-spacious">
                       {currentReport.actionSteps.map((step, idx) => (
-                        <li key={idx} className="action-step-item">
+                        <li key={idx} className="action-step-item-spacious">
                           <span className="action-step-number">0{idx + 1}</span>
                           <span>{step}</span>
                         </li>
@@ -278,11 +280,11 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
               </div>
 
               {/* Sources */}
-              <div className="report-section">
-                <div className="report-label">Sources</div>
-                <div className="sources-pills-wrap">
+              <div className="report-section-spacious" style={{ marginBottom: 0 }}>
+                <div className="report-label">Traceable Information Sources</div>
+                <div className="sources-pills-wrap-spacious">
                   {currentReport.sources.map((src, idx) => (
-                    <div key={idx} className="source-pill">
+                    <div key={idx} className="source-pill-spacious">
                       <span>{src.name}</span>
                       <span className="source-pill-type">({src.type})</span>
                     </div>
@@ -292,7 +294,7 @@ SOURCES: ${report.sources ? report.sources.map(s => s.name).join(', ') : 'Sunris
             </div>
 
             {/* Report Footer & Actions */}
-            <div className="report-footer">
+            <div className="report-footer-spacious">
               <div className="report-footer-left">
                 Verified against Primavera Baseline & Daily Site Log ledger.
               </div>

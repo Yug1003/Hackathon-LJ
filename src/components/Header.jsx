@@ -11,9 +11,7 @@ import {
   FileText,
   Activity,
   Plus,
-  ChevronDown,
-  Search,
-  Bell
+  ChevronDown
 } from 'lucide-react';
 
 export default function Header({
@@ -33,110 +31,80 @@ export default function Header({
   ];
 
   return (
-    <header className="site-top-navbar">
-      {/* Upper Navigation Row: Brand + Project Telemetry + Global Actions */}
-      <div className="navbar-upper">
-        <div className="navbar-upper-left">
-          {/* ConstructIQ Brand */}
-          <div className="brand-logo-wrap" onClick={() => setCurrentTab('dashboard')} style={{ cursor: 'pointer' }}>
+    <header className="site-unified-navbar">
+      <div className="navbar-container">
+        {/* Brand & Project Identity */}
+        <div className="navbar-brand-section">
+          <div
+            className="brand-logo-wrap"
+            onClick={() => setCurrentTab('dashboard')}
+            role="button"
+            tabIndex={0}
+            title="ConstructIQ Home"
+          >
             <div className="brand-symbol">
-              <Building size={17} strokeWidth={2.3} />
+              <Building size={16} strokeWidth={2.4} />
             </div>
-            <div>
+            <div className="brand-text-block">
               <div className="brand-name">
                 CONSTRUCT<span>IQ</span>
               </div>
-              <div className="brand-tagline">Engineering Command</div>
             </div>
           </div>
 
-          <div className="header-divider"></div>
+          <div className="navbar-vertical-divider"></div>
 
-          {/* Project Selector Badge */}
-          <div className="project-badge-selector" title="Active Project">
-            <div className="project-badge-top">
-              <span className="status-indicator-dot" title="Active Construction Phase"></span>
-              <span className="project-badge-title">{PROJECT_INFO.name}</span>
-              <ChevronDown size={13} color="#77746D" />
-            </div>
-            <div className="project-badge-sub">
-              {PROJECT_INFO.details} · <span style={{ color: 'var(--color-accent)', fontWeight: 600 }}>{PROJECT_INFO.phase}</span>
+          {/* Project Indicator */}
+          <div className="navbar-project-indicator" title="Active High-Rise Project">
+            <span className="status-indicator-dot"></span>
+            <div className="project-indicator-text">
+              <span className="project-indicator-name">{PROJECT_INFO.name}</span>
+              <span className="project-indicator-loc">Ahmedabad · 18F</span>
             </div>
           </div>
         </div>
 
-        <div className="navbar-upper-right">
-          {/* Project Health Gauge */}
-          <div className="health-gauge-badge" title="Structural & Schedule Health Composite">
-            <Activity size={15} color="#557A62" />
-            <div>
-              <div className="health-gauge-title">Project Health</div>
-              <div className="health-gauge-number tabular-nums">{PROJECT_INFO.healthScore}%</div>
-            </div>
-          </div>
-
-          {/* Quick Action Buttons */}
-          <button
-            className="header-action-btn intel-quick-btn"
-            onClick={onAskIntelClick}
-            title="Ask Project Intelligence Engine"
-          >
-            <Compass size={14} color="var(--color-accent)" />
-            <span>Project Intel</span>
-          </button>
-
-          <button
-            className="header-action-btn primary"
-            onClick={onNewSiteLogClick}
-          >
-            <Plus size={14} strokeWidth={2.5} />
-            <span>Log Site Entry</span>
-          </button>
-
-          {/* User Profile Pill */}
-          <div className="engineer-profile-pill" title="Current Certified Site Engineer">
-            <div className="engineer-avatar">RV</div>
-            <div className="engineer-info">
-              <span className="engineer-name">Er. R. Varma</span>
-              <span className="engineer-role">Lead Site Engineer</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Lower Navigation Row: All Page Links */}
-      <nav className="navbar-lower">
-        <div className="navbar-nav-links">
+        {/* Central Navigation Tabs - Spacious and Clean */}
+        <nav className="navbar-central-links">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = currentTab === item.id;
             return (
               <button
                 key={item.id}
-                className={`top-nav-btn ${isActive ? 'active' : ''}`}
+                className={`unified-nav-link ${isActive ? 'active' : ''}`}
                 onClick={() => setCurrentTab(item.id)}
               >
-                <Icon className="top-nav-icon" strokeWidth={isActive ? 2.2 : 1.8} />
+                <Icon size={15} strokeWidth={isActive ? 2.2 : 1.8} className="nav-link-icon" />
                 <span>{item.label}</span>
                 {item.isIntelligence && (
-                  <span className="nav-badge-intel">INTEL</span>
+                  <span className="unified-nav-badge">INTEL</span>
                 )}
-                {isActive && <span className="active-nav-indicator"></span>}
+                {isActive && <span className="nav-active-bar"></span>}
               </button>
             );
           })}
-        </div>
+        </nav>
 
-        <div className="navbar-lower-meta">
-          <span className="live-telemetry-badge">
-            <span className="live-pulse"></span>
-            248 Personnel Active On-Site
-          </span>
-          <span className="mono-nums meta-clock">
-            {PROJECT_INFO.weather.temp} · {PROJECT_INFO.weather.condition}
-          </span>
+        {/* Right Actions & Health Telemetry */}
+        <div className="navbar-right-actions">
+          {/* Health Gauge */}
+          <div className="unified-health-badge" title="Project Health composite score">
+            <Activity size={14} color="#557A62" strokeWidth={2.2} />
+            <span className="health-badge-label">Health</span>
+            <span className="health-badge-val mono-nums">{PROJECT_INFO.healthScore}%</span>
+          </div>
+
+          {/* Primary CTA */}
+          <button
+            className="navbar-cta-btn"
+            onClick={onNewSiteLogClick}
+          >
+            <Plus size={14} strokeWidth={2.5} />
+            <span>Log Entry</span>
+          </button>
         </div>
-      </nav>
+      </div>
     </header>
   );
 }
