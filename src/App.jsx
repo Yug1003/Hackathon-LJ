@@ -83,11 +83,11 @@ export default function App() {
       </main>
 
       {/* Modern Professional Footer with Tailwind Flexbox Spacing */}
-      <footer className="w-full bg-white border-t border-gray-200 py-6 px-6 md:px-8 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+      <footer className="w-full bg-white border-t border-gray-200 py-6 px-4 sm:px-6 lg:px-8 mt-auto">
+        <div className="w-full lg:w-[80%] mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-base text-gray-500">
           {/* Left: Branding & Tagline */}
           <div className="flex items-center gap-3">
-            <span className="font-extrabold text-gray-900 text-base tracking-tight">
+            <span className="font-extrabold text-gray-900 text-lg tracking-tight">
               CONSTRUCT<span className="text-gray-400 font-normal">IQ</span>
             </span>
             <span className="text-gray-200">|</span>
@@ -101,7 +101,7 @@ export default function App() {
 
           {/* Right: Verification Status Badge */}
           <div className="flex items-center">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs md:text-sm font-medium bg-green-50 text-green-700 border border-green-200">
+            <span className="inline-flex items-center px-3.5 py-1 rounded-full text-sm font-semibold bg-green-50 text-green-700 border border-green-200">
               IS 456 / IS 1893 Verified
             </span>
           </div>
